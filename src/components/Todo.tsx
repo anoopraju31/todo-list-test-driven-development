@@ -11,11 +11,11 @@ interface TodoProps {
 }
 
 interface TodoInputProps {
-	setTodos: React.Dispatch<React.SetStateAction<TodoItem[]>>
+	onItemAdded: (item: TodoItem) => void
 }
 
 const TodoInput = (props: TodoInputProps) => {
-	const { setTodos } = props
+	const { onItemAdded } = props
 	const [todo, setTodo] = useState<string>('')
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,7 +25,7 @@ const TodoInput = (props: TodoInputProps) => {
 	const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
 		if (e.key === 'Enter') {
 			const id = uuid()
-			setTodos((prev) => [...prev, { id, content: todo }])
+			onItemAdded({ id, content: todo })
 		}
 	}
 	return (
@@ -42,9 +42,13 @@ const Todo = (props: TodoProps) => {
 	const { items } = props
 	const [todos, setTodos] = useState<TodoItem[]>(items)
 
+	const onItemAdded = (item: TodoItem) => {
+		setTodos((prev) => [...prev, item])
+	}
+
 	return (
 		<div>
-			<TodoInput setTodos={setTodos} />
+			<TodoInput onItemAdded={onItemAdded} />
 			{todos.map((item) => (
 				<p key={item.id}> {item.content} </p>
 			))}
