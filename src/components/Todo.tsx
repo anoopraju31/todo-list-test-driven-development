@@ -10,9 +10,12 @@ interface TodoProps {
 	items: TodoItem[]
 }
 
-const Todo = (props: TodoProps) => {
-	const { items } = props
-	const [todos, setTodos] = useState<TodoItem[]>(items)
+interface TodoInputProps {
+	setTodos: React.Dispatch<React.SetStateAction<TodoItem[]>>
+}
+
+const TodoInput = (props: TodoInputProps) => {
+	const { setTodos } = props
 	const [todo, setTodo] = useState<string>('')
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,15 +28,23 @@ const Todo = (props: TodoProps) => {
 			setTodos((prev) => [...prev, { id, content: todo }])
 		}
 	}
+	return (
+		<input
+			type='text'
+			data-testid='input'
+			onChange={handleChange}
+			onKeyDown={handleKeyDown}
+		/>
+	)
+}
+
+const Todo = (props: TodoProps) => {
+	const { items } = props
+	const [todos, setTodos] = useState<TodoItem[]>(items)
 
 	return (
 		<div>
-			<input
-				type='text'
-				data-testid='input'
-				onChange={handleChange}
-				onKeyDown={handleKeyDown}
-			/>
+			<TodoInput setTodos={setTodos} />
 			{todos.map((item) => (
 				<p key={item.id}> {item.content} </p>
 			))}
