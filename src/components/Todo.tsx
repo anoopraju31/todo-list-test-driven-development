@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import TodoInput from './TodoInput'
+import Item from './Item'
 
 export interface TodoItem {
 	id: string
@@ -26,10 +27,7 @@ const Todo = (props: TodoProps) => {
 		<div>
 			<TodoInput onItemAdded={onItemAdded} />
 			{todos.map((item) => (
-				<p onClick={() => markAsDown(item)} key={item.id}>
-					{' '}
-					{item.content}{' '}
-				</p>
+				<Item key={item.id} item={item} markAsDown={markAsDown} />
 			))}
 		</div>
 	)
