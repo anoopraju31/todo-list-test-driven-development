@@ -18,9 +18,12 @@ const Todo = (props: TodoProps) => {
 	return (
 		<div>
 			<TodoInput onItemAdded={addTodoItem} />
-			{todos.map((item) => (
-				<Item key={item.id} item={item} markAsDown={markAsDown} />
-			))}
+
+			<ul>
+				{todos.map((item) => (
+					<Item key={item.id} item={item} markAsDown={markAsDown} />
+				))}
+			</ul>
 		</div>
 	)
 }

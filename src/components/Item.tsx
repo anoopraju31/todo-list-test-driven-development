@@ -8,7 +8,7 @@ interface ItemProps {
 const Item = (props: ItemProps) => {
 	const { item, markAsDown } = props
 
-	return <p onClick={() => markAsDown(item)}> {item.content} </p>
+	return <li onClick={() => markAsDown(item)}> {item.content} </li>
 }
 
 export default Item
