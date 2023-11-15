@@ -1,16 +1,16 @@
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import Todo, { TodoItem } from '../components/Todo'
 
 describe('ToDo List App', () => {
-	//* 1. Render an item
-	//* 2. Render Multiple items
+	//// 1. Render an item
+	//// 2. Render Multiple items
 	//* 3. Add new item to the list
 	//* 4. Mark an item as Done
 
 	it('Should render an item', () => {
 		const todos: TodoItem[] = [
 			{
-				id: 1,
+				id: '1',
 				content: 'Buy some milk',
 			},
 		]
@@ -23,7 +23,7 @@ describe('ToDo List App', () => {
 	it('Should render another item', () => {
 		const todos: TodoItem[] = [
 			{
-				id: 1,
+				id: '1',
 				content: 'Buy some apple',
 			},
 		]
@@ -36,11 +36,11 @@ describe('ToDo List App', () => {
 	it('Should render multiple items', () => {
 		const todos: TodoItem[] = [
 			{
-				id: 1,
+				id: '1',
 				content: 'Buy some apple',
 			},
 			{
-				id: 2,
+				id: '2',
 				content: 'Buy some milk',
 			},
 		]
@@ -49,5 +49,16 @@ describe('ToDo List App', () => {
 
 		expect(screen.getByText('Buy some apple')).toBeInTheDocument()
 		expect(screen.getByText('Buy some milk')).toBeInTheDocument()
+	})
+
+	it('Should add a new item to the list', () => {
+		render(<Todo items={[]} />)
+
+		const input = screen.getByTestId('input')
+
+		fireEvent.change(input, { target: { value: 'Buy some oranges' } })
+		fireEvent.keyDown(input, { key: 'Enter', code: 'Enter', charCode: 13 })
+
+		expect(screen.getByText('Buy some oranges')).toBeInTheDocument()
 	})
 })
