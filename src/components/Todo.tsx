@@ -18,11 +18,18 @@ const Todo = (props: TodoProps) => {
 		setTodos((prev) => [...prev, item])
 	}
 
+	const markAsDown = (item: TodoItem) => {
+		setTodos((prev) => prev.filter((todo) => todo.id !== item.id))
+	}
+
 	return (
 		<div>
 			<TodoInput onItemAdded={onItemAdded} />
 			{todos.map((item) => (
-				<p key={item.id}> {item.content} </p>
+				<p onClick={() => markAsDown(item)} key={item.id}>
+					{' '}
+					{item.content}{' '}
+				</p>
 			))}
 		</div>
 	)

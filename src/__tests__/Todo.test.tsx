@@ -4,7 +4,7 @@ import Todo, { TodoItem } from '../components/Todo'
 describe('ToDo List App', () => {
 	//// 1. Render an item
 	//// 2. Render Multiple items
-	//* 3. Add new item to the list
+	//// 3. Add new item to the list
 	//* 4. Mark an item as Done
 
 	it('Should render an item', () => {
@@ -60,5 +60,21 @@ describe('ToDo List App', () => {
 		fireEvent.keyDown(input, { key: 'Enter', code: 'Enter', charCode: 13 })
 
 		expect(screen.getByText('Buy some oranges')).toBeInTheDocument()
+	})
+
+	it('Should mark an item as Done', () => {
+		const todos: TodoItem[] = [
+			{
+				id: '1',
+				content: 'Buy some milk',
+			},
+		]
+
+		render(<Todo items={todos} />)
+
+		const item = screen.getByText('Buy some milk')
+		fireEvent.click(item)
+
+		expect(screen.queryByText('Buy some milk')).not.toBeInTheDocument()
 	})
 })
