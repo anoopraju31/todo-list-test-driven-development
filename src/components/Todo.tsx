@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import useTodo from '../hooks/useTodo'
 import TodoInput from './TodoInput'
 import Item from './Item'
 
@@ -13,19 +13,11 @@ interface TodoProps {
 
 const Todo = (props: TodoProps) => {
 	const { items } = props
-	const [todos, setTodos] = useState<TodoItem[]>(items)
-
-	const onItemAdded = (item: TodoItem) => {
-		setTodos((prev) => [...prev, item])
-	}
-
-	const markAsDown = (item: TodoItem) => {
-		setTodos((prev) => prev.filter((todo) => todo.id !== item.id))
-	}
+	const { todos, addTodoItem, markAsDown } = useTodo(items)
 
 	return (
 		<div>
-			<TodoInput onItemAdded={onItemAdded} />
+			<TodoInput onItemAdded={addTodoItem} />
 			{todos.map((item) => (
 				<Item key={item.id} item={item} markAsDown={markAsDown} />
 			))}
