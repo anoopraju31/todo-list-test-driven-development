@@ -1,6 +1,6 @@
 import useTodo from '../hooks/useTodo'
 import TodoInput from './TodoInput'
-import Item from './Item'
+import TodoList from './TodoList'
 
 export interface TodoItem {
 	id: string
@@ -18,12 +18,7 @@ const Todo = (props: TodoProps) => {
 	return (
 		<div>
 			<TodoInput onItemAdded={addTodoItem} />
-
-			<ol>
-				{todos.map((item) => (
-					<Item key={item.id} item={item} markAsDown={markAsDown} />
-				))}
-			</ol>
+			<TodoList todos={todos} markAsDown={markAsDown} />
 		</div>
 	)
 }
